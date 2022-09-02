@@ -18,10 +18,10 @@ function App() {
 
   useEffect(() => {
     onAuthStateChanged(auth, (currentUser) => {
-        setUser(currentUser);
+      setUser(currentUser);
     });
-  }, [])
-  
+  }, []);
+
   const register = async () => {
     try {
       const user = await createUserWithEmailAndPassword(
