@@ -1,4 +1,4 @@
-import { useState } from "react";
+import { useState, useEffect } from "react";
 import {
   createUserWithEmailAndPassword,
   signInWithEmailAndPassword,
@@ -16,10 +16,12 @@ function App() {
 
   const [user, setUser] = useState({});
 
-  onAuthStateChanged(auth, (currentUser) => {
-    setUser(currentUser);
-  });
-
+  useEffect(() => {
+    onAuthStateChanged(auth, (currentUser) => {
+        setUser(currentUser);
+    });
+  }, [])
+  
   const register = async () => {
     try {
       const user = await createUserWithEmailAndPassword(
@@ -56,12 +58,13 @@ function App() {
         <h3> Register User </h3>
         <input
           placeholder="Email..."
-          
+          onChange={(event) => {
+            setRegisterEmail(event.target.value);
+          }}
         />
         <input
           placeholder="Password..."
-          onKeyUp={(event) => {
-            
+          onChange={(event) => {
             setRegisterPassword(event.target.value);
           }}
         />
@@ -73,13 +76,13 @@ function App() {
         <h3> Login </h3>
         <input
           placeholder="Email..."
-          onKeyUp={(event) => {
+          onChange={(event) => {
             setLoginEmail(event.target.value);
           }}
         />
         <input
           placeholder="Password..."
-          onKeyUp={(event) => {
+          onChange={(event) => {
             setLoginPassword(event.target.value);
           }}
         />
