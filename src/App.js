@@ -4,6 +4,8 @@ import {
   signInWithEmailAndPassword,
   onAuthStateChanged,
   signOut,
+  GoogleAuthProvider,
+  signInWithPopup,
 } from "firebase/auth";
 import "./App.css";
 import { auth } from "./firebase-config";
@@ -15,6 +17,8 @@ function App() {
   const [loginPassword, setLoginPassword] = useState("");
 
   const [user, setUser] = useState({});
+
+  const googleProvider = new GoogleAuthProvider();
 
   useEffect(() => {
     onAuthStateChanged(auth, (currentUser) => {
@@ -50,6 +54,17 @@ function App() {
 
   const logout = async () => {
     await signOut(auth);
+  };
+
+  const signInWithGoogle = async () => {
+    try {
+      const res = await signInWithPopup(auth, googleProvider);
+      const user = res.user;
+      console.log(user);
+    } catch (err) {
+      console.error(err);
+      alert(err.message);
+    }
   };
 
   return (
@@ -88,6 +103,9 @@ function App() {
         />
 
         <button onClick={login}> Login</button>
+        <button className="login__btn login__google" onClick={signInWithGoogle}>
+          Login with Google
+        </button>
       </div>
 
       <h4> User Logged In: </h4>
