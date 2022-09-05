@@ -112,6 +112,9 @@ function App() {
       {user?.email}
 
       <button onClick={logout}> Sign Out </button>
+      <button onClick={logout}> Sign Out </button>
+      <button onClick={logout}> Sign Out </button>
+      <button onClick={logout}> Sign Out </button>
     </div>
   );
 }
